@@ -5,16 +5,14 @@ import NavBar from "./components/NavBar";
 import AddUser from "./components/AddUser";
 import FormDialog from "./components/FormDialog";
 
-
 class App extends Component {
   render() {
     return (
       <div>
         <NavBar />
         <ListUsers />
-        <AddUser/>
-        <FormDialog/>
-        
+        <AddUser />
+        <FormDialog />
       </div>
     );
   }

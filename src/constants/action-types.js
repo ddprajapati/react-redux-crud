@@ -1,6 +1,5 @@
 export const ADD_USER = "ADD_USER";
 export const UPDATE_USER = "UPDATE_USER";
-export const SELECT_USER = "SELECT_USERE";
 export const DELETE_USER = "DELETE_USERE";
 
 export const OPEN_FORM = "OPEN_FORM";
