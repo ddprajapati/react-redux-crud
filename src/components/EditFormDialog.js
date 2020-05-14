@@ -9,7 +9,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { CLOSE_FORM, ADD_USER } from "../constants/action-types";
+import { CLOSE_EDIT_FORM, UPDATE_USER } from "../constants/action-types";
 import { connect } from "react-redux";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -20,29 +20,29 @@ const validationSchema = Yup.object({
   status: Yup.string().required("Status Required"),
 });
 
-class FormDialog extends React.Component {
+class EditFormDialog extends React.Component {
   state = {
     open: false,
+    user: {},
   };
 
   componentDidMount() {
     this.setState({
-      open: this.props.userData.uiState.openFormDialog,
+      open: this.props.userData.uiState.openEditDialog,
     });
   }
 
   componentDidUpdate(prevProps) {
     if (
-      prevProps.userData.uiState.openFormDialog !==
-      this.props.userData.uiState.openFormDialog
+      prevProps.userData.uiState.openEditDialog !==
+      this.props.userData.uiState.openEditDialog
     ) {
-      this.setState({ open: this.props.userData.uiState.openFormDialog });
+      this.setState({ open: this.props.userData.uiState.openEditDialog });
     }
   }
 
   render() {
     const { userData, handleClose, handleSave } = this.props;
-
     return (
       <div>
         <Dialog
@@ -52,16 +52,11 @@ class FormDialog extends React.Component {
           maxWidth={"lg"}
         >
           <Formik
-            initialValues={{ name: "", role: "", status: "" }}
+            initialValues={userData.uiState.userToEdit.user}
             validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
-                const user = {
-                  id: userData.users.length + 1,
-                  created: new Date().toLocaleDateString(),
-                  ...values,
-                };
-                handleSave(user);
+                handleSave(values);
                 setSubmitting(false);
               }, 400);
             }}
@@ -76,13 +71,14 @@ class FormDialog extends React.Component {
               isSubmitting,
             }) => (
               <form onSubmit={handleSubmit}>
-                <DialogTitle id="form-dialog-title">Add User</DialogTitle>
+                <DialogTitle id="form-dialog-title">Update User</DialogTitle>
                 <DialogContent>
                   <TextField
                     autoFocus
                     margin="dense"
                     id="name"
                     label="Name*"
+                    value={values.name}
                     fullWidth
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -145,17 +141,17 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   handleClose: () =>
     dispatch({
-      type: CLOSE_FORM,
+      type: CLOSE_EDIT_FORM,
     }),
   handleSave: (user) => {
     dispatch({
-      type: ADD_USER,
+      type: UPDATE_USER,
       payload: user,
     });
     dispatch({
-      type: CLOSE_FORM,
+      type: CLOSE_EDIT_FORM,
     });
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormDialog);
+export default connect(mapStateToProps, mapDispatchToProps)(EditFormDialog);

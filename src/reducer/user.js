@@ -11,7 +11,7 @@ const initialState = {
   //Read
   users: [
     {
-      id: 1,
+      id: 1, //:TODO uuid need to use
       name: "Dilip Prajapati",
       role: "Partner",
       created: "10/11/2019",
@@ -33,9 +33,7 @@ const initialState = {
     },
   ],
   uiState: {
-    //Create
     openFormDialog: false,
-    //Update
     openEditDialog: false,
     userToEdit: {},
   },
@@ -43,7 +41,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    //-----------------CREAT----------------------------
     case ADD_USER:
       return {
         ...state,
@@ -68,34 +65,29 @@ export default (state = initialState, action) => {
         },
       };
 
-    //----------------UPDATE-------------------
     case UPDATE_USER:
-      console.log("Save updated user" + JSON.stringify(action));
-
       return {
         ...state,
         users: state.users.map((user) => {
           if (user.id !== action.payload.id) {
             return user;
           } else {
-            return { ...user, user: action.payload.user };
+            return { ...user, ...action.payload };
           }
         }),
       };
 
     case OPEN_EDIT_FORM:
-      console.log("Open Edit User Form" + JSON.stringify(action));
       return {
         ...state,
         uiState: {
           ...state.uiState,
           openEditDialog: true,
-          articleToEdit: action.payload,
+          userToEdit: action.payload,
         },
       };
 
     case CLOSE_EDIT_FORM:
-      console.log("Close Edit User Form" + JSON.stringify(action));
       return {
         ...state,
         uiState: {
@@ -103,8 +95,6 @@ export default (state = initialState, action) => {
           openEditDialog: false,
         },
       };
-
-    //-----------------DELETE-------------
 
     case DELETE_USER:
       return {

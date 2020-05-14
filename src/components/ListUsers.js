@@ -11,7 +11,7 @@ import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 import CommentIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { DELETE_USER } from "../constants/action-types";
+import { DELETE_USER, OPEN_EDIT_FORM } from "../constants/action-types";
 
 const styles = () => ({
   table: {
@@ -21,7 +21,12 @@ const styles = () => ({
 
 class ListUsers extends React.Component {
   render() {
-    const { classes, handleDelete, userData: { users = [] } = {} } = this.props;
+    const {
+      classes,
+      openEditDialog,
+      handleDelete,
+      userData: { users = [] } = {},
+    } = this.props;
 
     return (
       <TableContainer component={Paper}>
@@ -47,7 +52,7 @@ class ListUsers extends React.Component {
                 <TableCell align="right">
                   <IconButton
                     aria-label="Comments"
-                    //onClick={() => this.openEditDialog(value)}
+                    onClick={() => openEditDialog(user)}
                   >
                     <CommentIcon />
                   </IconButton>
@@ -76,6 +81,11 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({
       type: DELETE_USER,
       payload: { id },
+    }),
+  openEditDialog: (user) =>
+    dispatch({
+      type: OPEN_EDIT_FORM,
+      payload: { user },
     }),
 });
 const ListUserContainer = connect(

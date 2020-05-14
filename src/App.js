@@ -4,6 +4,7 @@ import ListUsers from "./components/ListUsers";
 import NavBar from "./components/NavBar";
 import AddUser from "./components/AddUser";
 import FormDialog from "./components/FormDialog";
+import EditFormDialog from "./components/EditFormDialog";
 
 class App extends Component {
   render() {
@@ -13,6 +14,8 @@ class App extends Component {
         <ListUsers />
         <AddUser />
         <FormDialog />
+        <EditFormDialog />
+
       </div>
     );
   }
