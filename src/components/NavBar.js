@@ -6,19 +6,14 @@ import Typography from "@material-ui/core/Typography";
 
 const styles = {};
 
-class NavBar extends React.Component {
-
-  render() {
-    return (
-      <AppBar position="static" color="default">
-        <Toolbar>
-          <Typography variant="title" color="secondary">
-            Users
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    );
-  }
-}
+const NavBar = () => (
+  <AppBar position="static" color="default">
+    <Toolbar>
+      <Typography variant="title" color="secondary">
+        Users
+      </Typography>
+    </Toolbar>
+  </AppBar>
+);
 
 export default withStyles(styles)(NavBar);
